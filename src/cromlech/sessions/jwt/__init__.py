@@ -69,18 +69,14 @@ class JWTCookieSession(JWTService):
                 #and the expires time to be now.
                 
                 if  session_data:
-                   token = self.generate(session_data)
-                   expires = datetime.now() + timedelta(minutes=self.lifetime)
-                else:
-                    token =self.generate({})
-                    expires = datetime(2000,1,1)
-
-                cookie = Cookie(
-                    name=self.cookie_name, value=token, path=path,
-                    domain=domain, expires=expires)
-                cookie_value = str(cookie)
-                self.check_cookie_size(cookie_value)
-                headers.append(('Set-Cookie', cookie_value))
+                    token = self.generate(session_data)
+                    expires = datetime.now() + timedelta(minutes=self.lifetime)
+                    cookie = Cookie(
+                        name=self.cookie_name, value=token, path=path,
+                        domain=domain, expires=expires)
+                    cookie_value = str(cookie)
+                    self.check_cookie_size(cookie_value)
+                    headers.append(('Set-Cookie', cookie_value))
                 return start_response(status, headers, exc_info)
             
             session = self.extract_session(environ)
