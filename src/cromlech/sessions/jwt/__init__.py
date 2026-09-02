@@ -77,6 +77,11 @@ class JWTCookieSession(JWTService):
                     cookie_value = str(cookie)
                     self.check_cookie_size(cookie_value)
                     headers.append(('Set-Cookie', cookie_value))
+                else:
+                    cookie = Cookie(
+                        name=self.cookie_name, value='', path=path,
+                        domain=domain, expires=datetime(1970, 1, 1))
+                    headers.append(('Set-Cookie', str(cookie)))                    
                 return start_response(status, headers, exc_info)
             
             session = self.extract_session(environ)
