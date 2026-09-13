@@ -40,7 +40,7 @@ class JWTCookieSession(JWTService):
         if cookie is not None:
             morsels = parse(cookie)
             token = morsels.get(self.cookie_name)
-            if token is not None:
+            if token:
                 try:
                     session_data = self.check_token(token)
                     return session_data
